@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}My Diary{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Welcome, {{ current_user.username }}!</h2>
+
+<!-- Form to submit a new diary entry -->
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">New Entry</h5>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.title.label(class="form-label") }}
+            {{ form.title(class="form-control") }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.content.label(class="form-label") }}
+            {{ form.content(class="form-control", rows=5) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+  </div>
+</div>
+
+<!-- Display existing entries -->
+<h3>Your Entries</h3>
+{% for entry in entries %}
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{ entry.title }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ entry.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}</h6>
+      <p class="card-text">{{ entry.content }}</p>
+
+      <!-- Buttons are now inside the card-body for better styling -->
+      <a href="{{ url_for('main.edit_entry', entry_id=entry._id) }}" class="btn btn-sm btn-warning">Edit</a>
+
+      <form action="{{ url_for('main.delete_entry', entry_id=entry._id) }}" method="POST" style="display:inline;">
+          <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this entry?')">Delete</button>
+      </form>
+    </div>
+  </div>
+{% else %}
+  <p class="text-muted">No entries yet.</p>
+{% endfor %}
+
+{% endblock %}
