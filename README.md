@@ -26,7 +26,7 @@ diary-app/
 
 in commnd prompt - run cmd -> mongo
 
-PS F:\MY_LIFE_MY_VIEWS\my projects\personal_diary_app\diary-app> venv\Scripts\activate
+\diary-app> venv\Scripts\activate
 python run.py
 ====================================
 signed up - satyam, satyamksingh02@gmail.com, 123456
